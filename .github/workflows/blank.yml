@@ -33,6 +33,7 @@ jobs:
           sudo -E apt -y install python3-pip
           sudo -E pip3 install you-get
           sudo -E pip3 install --upgrade you-get
+          sudo -E pip3 install --upgrade certifi
 
       # Runs a set of commands using the runners shell
       - name: Downloading Video
