@@ -39,9 +39,10 @@ jobs:
       - name: Downloading Video
         run: |
           sudo you-get --debug ${{ env.URL }}
+          sudo rm -rf *.cmt.xml
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
         with:
           name: TrMenu Artifact
-          path: ./*.mp4
+          path: ./*
           
