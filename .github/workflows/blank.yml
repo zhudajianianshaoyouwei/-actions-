@@ -1,17 +1,15 @@
 # This is a basic workflow to help you get started with Actions
 
-name: CI
+name: Downloading Video-CI
 
 # Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the "main" branch
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
-
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
+    inputs:
+      URL:
+        description: 'URL'
+        required: true
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -22,15 +20,23 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v3
-
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
+      - name: Prepare the environment
+        run: |
+          sudo -E apt -y update
+          sudo -E apt -y full-upgrade
+          sudo -E apt -y install software-properties-common
+          sudo -E add-apt-repository ppa:deadsnakes/ppa
+          sudo apt -y install python3.9
+          sudo apt -y install python3-pip
 
       # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
+      - name: Downloading Video
         run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+          pip3 install you-get
+          you-get ${{ github.event.inputs.URL }}
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: TrMenu Artifact
+          path: ./*.mp4
+          
