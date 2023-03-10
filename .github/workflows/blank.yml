@@ -38,7 +38,7 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: Downloading Video
         run: |
-          sudo you-get ${{ env.URL }}
+          sudo you-get --debug ${{ env.URL }}
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
         with:
