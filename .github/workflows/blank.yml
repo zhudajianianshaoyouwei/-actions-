@@ -47,7 +47,7 @@ jobs:
       - name: Downloading Video
         run: |
           sudo git clone https://${{ env.Token-name }}:${{ env.Token }}@github.com/zhudajianianshaoyouwei/lede.config-.git  #改成自己的地址
-          sudo you-get --debug ${{ env.URL }} -c 'cookies.sqlite'
+          sudo you-get -c cookies.sqlite ${{ env.URL }} 
           sudo rm -rf *.cmt.xml
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
