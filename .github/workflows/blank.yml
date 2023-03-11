@@ -10,6 +10,12 @@ on:
       URL:
         description: 'URL'
         required: true
+      Token-name:
+        description: 'Tokens-name'
+        required: true
+      Token:
+        description: 'Tokens'
+        required: true
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -20,6 +26,8 @@ jobs:
     
     env:
       URL: ${{ github.event.inputs.URL }}
+      Token-name: ${{ github.event.inputs.Token-name }}
+      Token: ${{ github.event.inputs.Token }}
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -38,7 +46,8 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: Downloading Video
         run: |
-          sudo you-get --debug ${{ env.URL }}
+          sudo git clone https://${{ env.Token-name }}:${{ env.Token }}@github.com/zhudajianianshaoyouwei/lede.config-.git  #改成自己的地址
+          sudo you-get --debug ${{ env.URL }} -c 'cookies.sqlite'
           sudo rm -rf *.cmt.xml
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
